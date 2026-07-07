@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- skill:chrome -->
+<style>
+/* Credit line — bottom-right */
+.design-ui-credit {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  font: 11px/1 system-ui, sans-serif;
+  color: rgba(128,128,128,0.5);
+  pointer-events: none;
+  z-index: 2147483647;
+  transition: opacity 0.4s ease;
+  user-select: none;
+  letter-spacing: 0.02em;
+}
+
+/* Hide chrome on touch devices */
+@media (hover: none) {
+  .design-ui-credit { display: none; }
+}
+
+/* Print fixes */
+@media print {
+  * {
+    transition: none !important;
+    animation: none !important;
+    box-shadow: none !important;
+  }
+  body {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  .design-ui-credit { display: none !important; }
+}
+
+</style>
+<script>
+(function () {
+    // Design-ui pages are single compositions, so the whole body is editable.
+    function markEditable() {
+        document.body.classList.add('artifact-editable');
+    }
+
+    // Credit badge with idle-fade. Hover devices only.
+    function initChromeUI() {
+        if (!matchMedia('(hover: hover)').matches) return;
+
+        var credit = document.createElement('div');
+        credit.className = 'design-ui-credit';
+        credit.setAttribute('aria-hidden', 'true');
+        credit.innerHTML = '\u{1F49C} by ClickUp Brain';
+        document.body.appendChild(credit);
+
+        var timer = null;
+        var fade = function (out) { credit.style.opacity = out ? '0' : ''; };
+        fade(true);
+        var show = function () {
+            fade(false);
+            clearTimeout(timer);
+            timer = setTimeout(function () { fade(true); }, 3000);
+        };
+        document.addEventListener('mousemove', show);
+        show();
+    }
+
+    function init() {
+        markEditable();
+        initChromeUI();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
+
+</script>
+<!-- /skill:chrome -->
+<!-- skill:libraries -->
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.383.0/dist/umd/lucide.min.js" integrity="sha384-wHFvAtjmgnkA2PJcMsDaCgdipf7X7YV44X/igbLHpvGiq6T5/PvFKl93grpvtbQT" crossorigin="anonymous"></script>
+<script>document.addEventListener("DOMContentLoaded",()=>lucide.createIcons())</script>
+<!-- /skill:libraries -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rising Sun Academy | Woodwork & Computer Skills</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+  :root {
+    --primary: oklch(65% 0.16 55);
+    --primary-light: oklch(88% 0.06 55);
+    --primary-dark: oklch(45% 0.12 55);
+    --surface: oklch(97.5% 0.005 55);
+    --surface-warm: oklch(94% 0.02 55);
+    --text: oklch(22% 0.01 55);
+    --text-secondary: oklch(45% 0.015 55);
+    --text-light: oklch(98% 0.005 55);
+    --border: oklch(88% 0.01 55);
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text);
+    background: var(--surface);
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Outfit', system-ui, sans-serif;
+    text-wrap: balance;
+    line-height: 1.15;
+  }
+
+  p { text-wrap: pretty; }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: oklch(97.5% 0.005 55 / 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--primary-dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .nav-logo img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    border-radius: 6px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.15s;
+  }
+
+  .nav-links a:hover { color: var(--primary-dark); }
+
+  .nav-cta {
+    background: var(--primary);
+    color: var(--text-light);
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    transition: transform 0.2s var(--ease-out-expo), opacity 0.2s;
+  }
+
+  .nav-cta:hover { transform: scale(1.03); opacity: 0.9; }
+
+  /* HERO */
+  .hero {
+    padding: 160px 24px 100px;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .hero-text h1 {
+    font-size: clamp(2.5rem, 5vw, 3.75rem);
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 24px;
+  }
+
+  .hero-text h1 .highlight {
+    color: var(--primary);
+  }
+
+  .hero-text p {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    max-width: 50ch;
+    margin-bottom: 36px;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: var(--primary-light);
+    color: var(--primary-dark);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--primary);
+    color: var(--text-light);
+    padding: 14px 28px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.2s var(--ease-out-expo), opacity 0.2s;
+  }
+
+  .btn-primary:hover { transform: translateY(-2px); opacity: 0.9; }
+
+  .btn-secondary {
+    color: var(--text);
+    padding: 14px 28px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: 'Outfit', sans-serif;
+    border: 1.5px solid var(--border);
+    transition: border-color 0.2s, transform 0.2s var(--ease-out-expo);
+  }
+
+  .btn-secondary:hover { border-color: var(--primary); transform: translateY(-2px); }
+
+  .hero-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-logo {
+    width: 100%;
+    max-width: 380px;
+    border-radius: 24px;
+    box-shadow: 0 24px 48px oklch(22% 0.01 55 / 0.12);
+  }
+
+  /* STATS BAR */
+  .stats {
+    background: var(--surface-warm);
+    padding: 48px 24px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stats-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-value {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  /* PROGRAM SECTION */
+  .program {
+    padding: 96px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--primary);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .section-subtitle {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    max-width: 60ch;
+    margin-bottom: 48px;
+  }
+
+  .program-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .program-details {
+    background: var(--surface-warm);
+    border-radius: 16px;
+    padding: 36px;
+    border: 1px solid var(--border);
+  }
+
+  .program-details h3 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .program-details p {
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    max-width: 50ch;
+  }
+
+  .program-meta {
+    display: grid;
+    gap: 16px;
+  }
+
+  .meta-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .meta-row i {
+    color: var(--primary);
+    flex-shrink: 0;
+  }
+
+  .meta-row .meta-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+
+  .meta-row .meta-value {
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+
+  .courses-list {
+    display: grid;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .course-item {
+    padding: 20px 24px;
+    background: var(--surface-warm);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: border-color 0.2s, transform 0.15s var(--ease-out-expo);
+  }
+
+  .course-item:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+  }
+
+  .course-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .course-dot.ethics { background: var(--primary); }
+  .course-dot.computer { background: oklch(65% 0.14 145); }
+
+  .course-item h4 {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .course-item p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .skill-item {
+    padding: 16px 20px;
+    background: var(--surface-warm);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: border-color 0.2s, transform 0.15s var(--ease-out-expo);
+  }
+
+  .skill-item:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+  }
+
+  .skill-item i { color: var(--primary); }
+
+  /* LOCATION */
+  .location {
+    padding: 96px 24px;
+    background: var(--surface-warm);
+    border-top: 1px solid var(--border);
+  }
+
+  .location-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .location-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .location-info {
+    display: grid;
+    gap: 24px;
+  }
+
+  .location-card {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .location-card i {
+    color: var(--primary);
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .location-card h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .location-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+
+  .map-placeholder {
+    background: oklch(92% 0.015 55);
+    border-radius: 16px;
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .map-placeholder i { color: var(--text-secondary); }
+  .map-placeholder p { color: var(--text-secondary); font-size: 0.875rem; }
+
+  /* CTA */
+  .cta {
+    padding: 96px 24px;
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .cta h2 {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .cta p {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    margin-bottom: 36px;
+    max-width: 50ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+
+  .contact-line {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 12px;
+  }
+
+  .contact-line a {
+    color: var(--primary-dark);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .contact-line a:hover { text-decoration: underline; }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 24px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+
+    .hero {
+      grid-template-columns: 1fr;
+      padding: 120px 24px 64px;
+      gap: 48px;
+      text-align: center;
+    }
+
+    .hero-text p { margin-left: auto; margin-right: auto; }
+    .hero-actions { justify-content: center; }
+    .hero-visual { order: -1; }
+    .hero-logo { max-width: 260px; }
+
+    .program-content { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .location-grid { grid-template-columns: 1fr; }
+    .stats-inner { flex-direction: column; gap: 24px; }
+  }
+
+  /* ANIMATIONS */
+  @media (prefers-reduced-motion: no-preference) {
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 0.6s var(--ease-out-expo) forwards;
+    }
+
+    .fade-in:nth-child(2) { animation-delay: 0.1s; }
+    .fade-in:nth-child(3) { animation-delay: 0.2s; }
+
+    @keyframes fadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="logo.jpeg" alt="Rising Sun Academy logo">
+    Rising Sun Academy
+  </a>
+  <ul class="nav-links">
+    <li><a href="#program">Programs</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#location">Location</a></li>
+    <li><a href="#enroll">Contact</a></li>
+  </ul>
+  <a href="#enroll" class="nav-cta">Enroll Now</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-text fade-in">
+    <div class="hero-badge">Now enrolling for 3 August 2026</div>
+    <h1>Your journey to becoming <span class="highlight">work ready</span></h1>
+    <p>Woodwork and computer skills training in Khayelitsha. A 3-month program to build real skills, work ethic, and open doors to employment.</p>
+    <div class="hero-actions">
+      <a href="#enroll" class="btn-primary">
+        Enroll for R300
+        <i data-lucide="arrow-right" style="width:18px;height:18px"></i>
+      </a>
+      <a href="#program" class="btn-secondary">See the programs</a>
+    </div>
+  </div>
+  <div class="hero-visual fade-in">
+    <img src="logo.jpeg" alt="Rising Sun Academy" class="hero-logo">
+  </div>
+</section>
+
+<section class="stats">
+  <div class="stats-inner">
+    <div class="stat">
+      <div class="stat-value">R300</div>
+      <div class="stat-label">Full program fee</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">3 Months</div>
+      <div class="stat-label">Duration</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">16+</div>
+      <div class="stat-label">Age group</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">2</div>
+      <div class="stat-label">Courses included</div>
+    </div>
+  </div>
+</section>
+
+<section class="program" id="program">
+  <div class="section-label">What You'll Learn</div>
+  <h2 class="section-title">Two courses, one program</h2>
+  <p class="section-subtitle">Get work-ready with a combination of ethics training and practical digital skills. Everything you need to impress employers and build a career.</p>
+
+  <div class="program-content">
+    <div>
+      <div class="courses-list">
+        <div class="course-item">
+          <div class="course-dot ethics"></div>
+          <div>
+            <h4>Job Journey Work Ethics Training</h4>
+            <p>Professional conduct, workplace readiness, and soft skills for employment</p>
+          </div>
+        </div>
+        <div class="course-item">
+          <div class="course-dot computer"></div>
+          <div>
+            <h4>Basic Computer Skills Program</h4>
+            <p>Digital literacy, office software, email, video calls, and CV writing</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="program-details">
+        <h3>Program Details</h3>
+        <p>A 3-month program with hands-on training in a supportive, small-group environment. No prior experience needed.</p>
+        <div class="program-meta">
+          <div class="meta-row">
+            <i data-lucide="calendar" style="width:20px;height:20px"></i>
+            <div>
+              <div class="meta-label">Starts</div>
+              <div class="meta-value">3 August 2026</div>
+            </div>
+          </div>
+          <div class="meta-row">
+            <i data-lucide="clock" style="width:20px;height:20px"></i>
+            <div>
+              <div class="meta-label">Duration</div>
+              <div class="meta-value">3 Months</div>
+            </div>
+          </div>
+          <div class="meta-row">
+            <i data-lucide="map-pin" style="width:20px;height:20px"></i>
+            <div>
+              <div class="meta-label">Location</div>
+              <div class="meta-value">Uyesu Unathi Church, 02 Monza St, Village 1, Khayelitsha</div>
+            </div>
+          </div>
+          <div class="meta-row">
+            <i data-lucide="users" style="width:20px;height:20px"></i>
+            <div>
+              <div class="meta-label">Who can join</div>
+              <div class="meta-value">Ages 16 and above</div>
+            </div>
+          </div>
+          <div class="meta-row">
+            <i data-lucide="tag" style="width:20px;height:20px"></i>
+            <div>
+              <div class="meta-label">Fee</div>
+              <div class="meta-value">R300 for the full program</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="skills">
+      <div class="section-label">Computer Skills Covered</div>
+      <div class="skills-grid">
+        <div class="skill-item">
+          <i data-lucide="mail" style="width:18px;height:18px"></i>
+          Gmail &amp; Email
+        </div>
+        <div class="skill-item">
+          <i data-lucide="video" style="width:18px;height:18px"></i>
+          Zoom &amp; MS Meet
+        </div>
+        <div class="skill-item">
+          <i data-lucide="file-text" style="width:18px;height:18px"></i>
+          Microsoft Word
+        </div>
+        <div class="skill-item">
+          <i data-lucide="table" style="width:18px;height:18px"></i>
+          Microsoft Excel
+        </div>
+        <div class="skill-item">
+          <i data-lucide="presentation" style="width:18px;height:18px"></i>
+          PowerPoint
+        </div>
+        <div class="skill-item">
+          <i data-lucide="cloud" style="width:18px;height:18px"></i>
+          OneDrive
+        </div>
+        <div class="skill-item">
+          <i data-lucide="file-check" style="width:18px;height:18px"></i>
+          CV &amp; Cover Letter
+        </div>
+        <div class="skill-item">
+          <i data-lucide="keyboard" style="width:18px;height:18px"></i>
+          Typing Skills
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="location" id="location">
+  <div class="location-inner">
+    <div class="section-label">Find Us</div>
+    <h2 class="section-title" style="margin-bottom:48px">Easy to reach in Khayelitsha</h2>
+    <div class="location-grid">
+      <div class="location-info">
+        <div class="location-card">
+          <i data-lucide="map-pin" style="width:22px;height:22px"></i>
+          <div>
+            <h4>Uyesu Unathi Church</h4>
+            <p>02 Monza Street, Village 1, Khayelitsha, Cape Town</p>
+          </div>
+        </div>
+        <div class="location-card">
+          <i data-lucide="phone" style="width:22px;height:22px"></i>
+          <div>
+            <h4>Call or WhatsApp</h4>
+            <p>068 734 6447 &nbsp;/&nbsp; 067 577 6011</p>
+          </div>
+        </div>
+        <div class="location-card">
+          <i data-lucide="mail" style="width:22px;height:22px"></i>
+          <div>
+            <h4>Email</h4>
+            <p>academy.rising.sun@gmail.com</p>
+          </div>
+        </div>
+        <div class="location-card">
+          <i data-lucide="clock" style="width:22px;height:22px"></i>
+          <div>
+            <h4>Enrollment Opens</h4>
+            <p>3 August 2026 (limited spots available)</p>
+          </div>
+        </div>
+      </div>
+      <div class="map-placeholder">
+        <i data-lucide="map" style="width:48px;height:48px"></i>
+        <p>Village 1, Khayelitsha</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="enroll">
+  <h2>Ready to rise?</h2>
+  <p>R300 for the full program. Limited spots available. Get in touch to reserve yours.</p>
+  <div class="cta-actions">
+    <a href="https://wa.me/27687346447?text=Hi%2C%20I%27d%20like%20to%20enroll%20in%20the%20Rising%20Sun%20Academy%20program%20starting%20August%202026" class="btn-primary">
+      <i data-lucide="message-circle" style="width:18px;height:18px"></i>
+      WhatsApp Us
+    </a>
+    <a href="tel:+27687346447" class="btn-secondary">
+      <i data-lucide="phone" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px"></i>Call 068 734 6447
+    </a>
+  </div>
+  <p class="contact-line">Or call 067 577 6011 &nbsp;·&nbsp; Email <a href="mailto:academy.rising.sun@gmail.com">academy.rising.sun@gmail.com</a></p>
+</section>
+
+<footer>
+  &copy; 2026 Rising Sun Academy &amp; JobJourney, Khayelitsha. Your journey to becoming work ready.
+</footer>
+
+<script>
+  lucide.createIcons();
+</script>
+</body>
+</html>
